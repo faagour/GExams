@@ -4,12 +4,10 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -28,15 +26,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $nom = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $local = null;
-
-    #[ORM\Column]
-    private ?bool $is_verified = null;
 
     public function getId(): ?int
     {
@@ -106,41 +95,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): static
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getLocal(): ?string
-    {
-        return $this->local;
-    }
-
-    public function setLocal(?string $local): static
-    {
-        $this->local = $local;
-
-        return $this;
-    }
-
-    public function isIsVerified(): ?bool
-    {
-        return $this->is_verified;
-    }
-
-    public function setIsVerified(bool $is_verified): static
-    {
-        $this->is_verified = $is_verified;
-
-        return $this;
     }
 }
